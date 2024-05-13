@@ -20,7 +20,4 @@ public class ProductFeature {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
-
-
 }

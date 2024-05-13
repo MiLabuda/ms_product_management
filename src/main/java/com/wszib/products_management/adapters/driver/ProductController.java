@@ -18,7 +18,7 @@ public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<ProductDTO>> getAllProducts(@PageableDefault(size = 5) Pageable pageable) {
         List<ProductDTO> products = productMapper.productsToProductsDTO(productService.findAll(pageable));
         return ResponseEntity.ok(products);
@@ -31,13 +31,13 @@ public class ProductController {
         return ResponseEntity.ok(productMapper.productToProductDTO(productService.getProductByIdOrThrow(id)));
     }
 
-//    @PostMapping()
-//    public ResponseEntity<ProductDTO> createProduct(
-//            @RequestBody ProductApiRequest productApiRequest) {
-//        Product product = productMapper.productFormToProduct(productApiRequest);
-//        productService.createProduct(product);
-//        return ResponseEntity.ok(productMapper.productToProductDTO(product));
-//    }
+    @PostMapping()
+    public ResponseEntity<ProductDTO> createProduct(
+            @RequestBody ProductRequestMessage productApiRequest) {
+        Product product = productMapper.productRequestMessageToProduct(productApiRequest);
+        productService.createProduct(product);
+        return ResponseEntity.ok(productMapper.productToProductDTO(product));
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteProduct(

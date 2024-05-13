@@ -1,5 +1,6 @@
 package com.wszib.products_management.adapters.driver;
 
+import com.wszib.products_management.hexagon.core.IdGenerator;
 import com.wszib.products_management.hexagon.core.Product;
 import org.springframework.stereotype.Component;
 
@@ -52,5 +53,25 @@ public class ProductMapper {
         return products.stream()
                 .map(this::productToProductDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Product productRequestMessageToProduct(ProductRequestMessage productRequestMessage) {
+        return new Product(
+                IdGenerator.generateId(),
+                productRequestMessage.ean(),
+                productRequestMessage.season(),
+                productRequestMessage.manufacturer(),
+                productRequestMessage.name(),
+                productRequestMessage.productType(),
+                productRequestMessage.features(),
+                productRequestMessage.width(),
+                productRequestMessage.profile(),
+                productRequestMessage.rim(),
+                productRequestMessage.loadIndex(),
+                productRequestMessage.speedIndex(),
+                productRequestMessage.dot(),
+                productRequestMessage.quantity(),
+                productRequestMessage.price()
+        );
     }
 }
